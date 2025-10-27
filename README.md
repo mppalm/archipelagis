@@ -8,13 +8,15 @@ In GQIS, go to Layer > Add Layer > Add Delimited Text Layer.
 
 - Choose the csv file, give it a name. <br/>
 - Encoding: latin1 (because of the ä,ö letters)
+- File format: CSV
 - Geometry definition: check "No geometry (attribute only table)".
 - Add.
 <br/>
 
 <b> "paavo_municipality_codes_2024.csv" <b/>
 <br/>
-- Upload it into QGIS the same way as the "population_2045.csv".
+- Upload it into QGIS the same way as the "population_2045.csv", except change the file format into:
+- File format: Custom delimiters > Semicolon
 <br/>
 The paavo_municipality_codes_2024.csv is derived from <br/>
 "Postal code - municipality key 2024" Excel file available at <br/>
