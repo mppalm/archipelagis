@@ -14,6 +14,8 @@ In GQIS, go to Layer > Add Layer > Add Delimited Text Layer.
 
 <b> "paavo_municipality_codes_2024.csv" <b/>
 <br/>
+- Upload it into QGIS the same way as the "population_2045.csv".
+<br/>
 The paavo_municipality_codes_2024.csv is derived from <br/>
 "Postal code - municipality key 2024" Excel file available at <br/>
 https://stat.fi/tup/paavo/paavon_aineistokuvaukset_en.html.
