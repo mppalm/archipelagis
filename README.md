@@ -29,11 +29,11 @@ https://stat.fi/tup/paavo/paavon_aineistokuvaukset_en.html.
 <b> "paavo_2024" </b>
 Folder includes the "paavo_sw_f_2024.shp" file. <br/>
 Attribute description: <br/>
-- area = total area of the municipality
-- mun_code = municipality code
-- 65_69 = 65-69 years old population (the rest of the age groups have similar logic)
-- elderly = paavo pt_elakel attribute renamed, refers to pensioners (those who receive pension)
-- mun = municipality name
+- area = total area of the municipality <br/>
+- mun_code = municipality code <br/>
+- 65_69 = 65-69 years old population (the rest of the age groups have similar logic) <br/>
+- elderly = paavo pt_elakel attribute renamed, refers to pensioners (those who receive pension) <br/>
+- mun = municipality name <br/>
 <br/>
 <br/>
 <b> "paavo_2045" </b>
