@@ -26,20 +26,20 @@ https://stat.fi/tup/paavo/paavon_aineistokuvaukset_en.html.
 <br/>
 
 <b> "paavo_2024" </b>
-- folder includes the "paavo_sw_f_2024.shp" file
-- attribute description:
-   area = total area of the municipality
-   mun_code = municipality code
-   65_69 = 65-69 years old population (the rest of the age groups have similar logic)
-   elderly = paavo pt_elakel attribute renamed, refers to pensioners (those who receive pension)
-   mun = municipality name
+Folder includes the "paavo_sw_f_2024.shp" file. <br/>
+Attribute description: <br/>
+- area = total area of the municipality
+- mun_code = municipality code
+- 65_69 = 65-69 years old population (the rest of the age groups have similar logic)
+- elderly = paavo pt_elakel attribute renamed, refers to pensioners (those who receive pension)
+- mun = municipality name
 <br/>
 <b> "paavo_2045" </b>
-- folder includes the "paavo_sw_f_2045.shp" file
-- same attributes from the 2024 version and in addition:
-  2045_total = total population (all age groups)
-  2045_65-74 = estimated population of 65-74 years old in 2045
-  2045_75- = estimated population of over 75 years old in 2045
+Folder includes the "paavo_sw_f_2045.shp" file. <br/>
+Same attributes from the 2024 version and in addition: <br/>
+- 2045_total = total population (all age groups)
+- 2045_65-74 = estimated population of 65-74 years old in 2045
+- 2045_75- = estimated population of over 75 years old in 2045
    
   
 
