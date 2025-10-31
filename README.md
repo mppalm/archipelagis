@@ -1,5 +1,11 @@
 # archipelagis
 Data for the geospatial project. <br/>
+<br/>
+<br/>
+Access the web map via this link: <br/>
+https://mppalm.github.io/archipelagis/
+<br/>
+<br/>
 
 <b> "population_2045.csv" <b/>
 <br/>
