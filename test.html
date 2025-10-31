@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archipelagis WM int</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    
+    <style>
+        #map { position: absolute; top: 0; bottom: 0; left: 0; right: 0; }
+        .layer-control { 
+            position: absolute; 
+            top: 10px; 
+            right: 10px; 
+            z-index: 1000; 
+            background: white; 
+            padding: 10px; 
+            border-radius: 5px; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .base-layer-control { 
+            position: absolute; 
+            top: 10px; 
+            left: 10px; 
+            z-index: 1000; 
+            background: white; 
+            padding: 10px; 
+            border-radius: 5px; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .base-toggle-btn {
+            padding: 8px 12px;
+            margin: 2px;
+            border: 1px solid #ccc;
+            background: #f8f9fa;
+            cursor: pointer;
+            display: block;
+            width: 120px;
+            text-align: left;
+        }
+        .base-toggle-btn.active {
+            background: #28a745;
+            color: white;
+            border-color: #1e7e34;
+        }
+        .control-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .toggle-btn {
+            padding: 8px 12px;
+            margin: 2px;
+            border: 1px solid #ccc;
+            background: #f8f9fa;
+            cursor: pointer;
+        }
+        .toggle-btn.active {
+            background: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+     <div class="base-layer-control">
+        <span class="control-title">Base Map:</span>
+        <button id="btnOSM" class="base-toggle-btn active">OpenStreetMap</button>
+        <button id="btnSatellite" class="base-toggle-btn">Satellite</button>
+    </div>
+    <div class="layer-control">
+        <div>
+            <strong>Data Year:</strong>
+            <button id="btn2024" class="toggle-btn active">2024</button>
+            <button id="btn2045" class="toggle-btn">2045</button>
+        </div>
+    </div>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    
+    <!-- Proj4 and Proj4Leaflet for custom CRS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.8.0/proj4.js"></script>
+    <script src="https://unpkg.com/proj4leaflet@1.0.2/src/proj4leaflet.js"></script>
+    
+
+    <script>
+      // Initialize the map with standard WGS84 projection
+      var map = L.map('map').setView([60.4484, 22.2672], 8);
+      
+      console.log('Map initialized with center:', map.getCenter());
+
+            // Debug clicks
+      map.on('click', function(e) {
+          console.log('Map background clicked at:', e.latlng);
+      });
+
+      // Define base layers
+      var osmLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+          maxZoom: 19
+      }).addTo(map);
+
+      var satelliteLayer = L.tileLayer('https://api.maptiler.com/maps/satellite/{z}/{x}/{y}.jpg?key=F651PQ3V3To4VcaQBjAv', {
+          attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a>',
+          maxZoom: 19
+      });
+      // Base layer toggle functionality
+      var currentBaseLayer = osmLayer;
+      
+      function toggleBaseLayer(layerType) {
+          // Remove current base layer
+          if (currentBaseLayer) {
+              map.removeLayer(currentBaseLayer);
+          }
+          
+          // Add new base layer based on selection
+          if (layerType === 'osm') {
+              map.addLayer(osmLayer);
+              currentBaseLayer = osmLayer;
+              document.getElementById('btnOSM').classList.add('active');
+              document.getElementById('btnSatellite').classList.remove('active');
+          } else if (layerType === 'satellite') {
+              map.addLayer(satelliteLayer);
+              currentBaseLayer = satelliteLayer;
+              document.getElementById('btnOSM').classList.remove('active');
+              document.getElementById('btnSatellite').classList.add('active');
+          }
+          
+          console.log('Switched to ' + layerType + ' base layer');
+      }
+
+      // Set up base layer toggle buttons
+      document.getElementById('btnOSM').addEventListener('click', function() {
+          toggleBaseLayer('osm');
+      });
+      document.getElementById('btnSatellite').addEventListener('click', function() {
+          toggleBaseLayer('satellite');
+      });
+
+      // Base maps for layer control
+      var baseMaps = {
+          "OpenStreetMap": osmLayer,
+          "Satellite": satelliteLayer
+      };
+
+      // Overlay maps object
+      var overlayMaps = {};
+
+      // Ensure proj4 knows EPSG:3067 (ETRS89 / TM35FIN) and WGS84
+      try {
+          proj4.defs("EPSG:3067", "+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+          proj4.defs("EPSG:4326", "+proj=longlat +datum=WGS84 +no_defs");
+      } catch (e) { 
+          console.warn('proj4.defs may already be defined:', e); 
+      }
+
+      // Helper: find first numeric coordinate in a GeoJSON object
+      function findFirstCoordinate(obj) {
+          if (!obj) return null;
+          if (obj.type === 'FeatureCollection') {
+              for (var i = 0; i < obj.features.length; i++) {
+                  var c = findFirstCoordinate(obj.features[i]);
+                  if (c) return c;
+              }
+          } else if (obj.type === 'Feature') {
+              return findFirstCoordinate(obj.geometry);
+          } else if (obj.type === 'GeometryCollection') {
+              for (var j = 0; j < obj.geometries.length; j++) {
+                  var d = findFirstCoordinate(obj.geometries[j]);
+                  if (d) return d;
+              }
+          } else if (obj.coordinates) {
+              // Descend until we get to a pair of numbers
+              var coords = obj.coordinates;
+              while (Array.isArray(coords) && Array.isArray(coords[0])) coords = coords[0];
+              if (Array.isArray(coords) && typeof coords[0] === 'number') return coords;
+          }
+          return null;
+      }
+
+      // Reproject coordinates recursively from `fromSrs` to `toSrs` (proj4 syntax)
+      function reprojectCoordinates(coords, fromSrs, toSrs) {
+          if (typeof coords[0] === 'number') {
+              // coords = [x, y] in source CRS
+              try {
+                  var p = proj4(fromSrs, toSrs, coords);
+                  // proj4 returns [lon, lat] for geographic target; GeoJSON expects [lon, lat]
+                  return [p[0], p[1]];
+              } catch (error) {
+                  console.error('Reprojection error:', error, 'for coords:', coords);
+                  return coords; // Return original if reprojection fails
+              }
+          }
+          return coords.map(function(c) { return reprojectCoordinates(c, fromSrs, toSrs); });
+      }
+
+      function reprojectGeoJSON(geojson, fromSrs, toSrs) {
+          console.log('Starting reprojection from', fromSrs, 'to', toSrs);
+          var copy = JSON.parse(JSON.stringify(geojson));
+          function walk(obj) {
+              if (!obj) return;
+              if (obj.type === 'FeatureCollection') return obj.features.forEach(walk);
+              if (obj.type === 'Feature') return walk(obj.geometry);
+              if (obj.type === 'GeometryCollection') return obj.geometries.forEach(walk);
+              if (obj.coordinates) {
+                  obj.coordinates = reprojectCoordinates(obj.coordinates, fromSrs, toSrs);
+              }
+          }
+          walk(copy);
+          console.log('Reprojection completed');
+          return copy;
+      }
+
+      // Function to load a GeoJSON file and handle reprojection
+      function loadGeoJSON(url, options) {
+          console.log('Attempting to load GeoJSON from:', url);
+          return fetch(url)
+              .then(function(response) { 
+                  if (!response.ok) throw new Error('HTTP error, status = ' + response.status);
+                  console.log('Successfully fetched', url);
+                  return response.json(); 
+              })
+              .then(function(data) {
+                  console.log("GeoJSON loaded from " + url + ":", data);
+
+                  var first = findFirstCoordinate(data);
+                  var geojsonToUse = data;
+
+                  // Check if we need to reproject (large numbers indicate projected coordinates)
+                  if (first && (Math.abs(first[0]) > 10000 || Math.abs(first[1]) > 10000)) {
+                      console.log('Reprojecting ' + url + ' from EPSG:3067 to EPSG:4326...');
+                      console.log('Original coordinates:', first);
+                      geojsonToUse = reprojectGeoJSON(data, 'EPSG:3067', 'EPSG:4326');
+                      console.log('Reprojected coordinates:', findFirstCoordinate(geojsonToUse));
+                  }
+
+                  console.log('Creating Leaflet layer for', url);
+                  const layer = L.geoJSON(geojsonToUse, options);
+                  console.log('Created layer:', layer);
+                  return layer;
+              })
+              .catch(function(error) {
+                  console.error('Error loading GeoJSON from ' + url + ':', error);
+                  throw error;
+              });
+      }
+
+            // Load medical services as GeoJSON with proper reprojection
+      function loadMedicalServices() {
+          console.log('Attempting to load medical services data...');
+          
+          const url = './MedicalServices_sw_finland.geojson';
+          
+          return fetch(url)
+              .then(response => {
+                  if (!response.ok) throw new Error('HTTP error loading medical services, status = ' + response.status);
+                  return response.json();
+              })
+              .then(data => {
+                  console.log('Medical services GeoJSON loaded successfully');
+                  
+                  if (data.features && data.features.length > 0) {
+                      console.log('Number of medical service features:', data.features.length);
+                      const firstCoords = data.features[0].geometry.coordinates;
+                      console.log('First medical service coordinates:', firstCoords);
+                      
+                      // Always reproject medical services from EPSG:3067 to WGS84
+                      console.log('Reprojecting medical services from EPSG:3067 to EPSG:4326...');
+                      data = reprojectGeoJSON(data, 'EPSG:3067', 'EPSG:4326');
+                      console.log('After reprojection - First feature coordinates:', data.features[0].geometry.coordinates);
+                  }
+                  
+                  // Create medical services layer with enhanced clickability
+                  const medicalLayer = L.geoJSON(data, {
+                      pointToLayer: function(feature, latlng) {
+                          console.log('Creating medical service marker at:', latlng);
+                          
+                          return L.marker(latlng, {
+                              icon: L.divIcon({
+                                  className: 'medical-marker',
+                                  html: '<div style="background-color: red; width: 10px; height: 10px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 5px black;"></div>',
+                                  iconSize: [10, 10],
+                                  iconAnchor: [10, 10]
+                              }),
+                              title: feature.properties.name || 'Medical Service',
+                              interactive: true
+                          });
+                      },
+                      onEachFeature: function(feature, layer) {
+                          const props = feature.properties || {};
+                          let popupContent = '<div style="max-width: 300px;"><h3>' + (props.kohteen_ni || '') + '</h3><table>';
+                            /*if (props.aukioloaja) {
+                                popupContent += '<tr><th scope="row">Open</th><td>' + props.aukioloaja + '</td></tr>';
+                            }*/
+                            if (props.palvelukoh) {
+                                popupContent += '<tr><th scope="row">Service Type</th><td>' + props.palvelukoh + '</td></tr>';
+                            }
+                            if (props.palvelut) {
+                                popupContent += '<tr><th scope="row">Services</th><td>' + props.palvelut + '</td></tr>';
+                            }
+
+                          popupContent += '</table></div>';
+                          layer.bindPopup(popupContent, { maxHeight: 400 });
+
+                          
+                      }
+                  });
+                  
+                  return {
+                      name: "Medical Services",
+                      layer: medicalLayer
+                  };
+              })
+              .catch(error => {
+                  console.error('Error loading medical services:', error);
+                  return {
+                      name: "Medical Services",
+                      layer: L.layerGroup()
+                  };
+              });
+      }
+      
+
+      // Paavo interaction handlers
+      function addPaavoInteractions(layer) {
+          layer.on({
+              mouseout: function(e) {
+                  for (var i in e.target._eventParents) {
+                      e.target._eventParents[i].resetStyle(e.target);
+                  }
+              },
+              mouseover: function(e){
+                  var t = e.target;
+                  if (t.setStyle) t.setStyle({ weight: 3, color: '#666' });
+              },
+              click: function(e){
+                  if (e.target && e.target._bounds) {
+                      map.fitBounds(e.target.getBounds());
+                  }
+              }
+          });
+      }
+
+      // 2024 handler
+      function pop_paavo_2024(feature, layer) {
+          addPaavoInteractions(layer);
+          var props = feature.properties || {};
+          var areaKm2 = (props.area != null && !isNaN(props.area)) ? (props.area / 1000000).toFixed(2) + ' km²' : '';
+          var popupContent = '<table>' +
+              '<tr><th scope="row">Municipality</th><td>' + props.mun + '</td></tr>' +
+              '<tr><th scope="row">Year</th><td>2024</td></tr>' +
+              '<tr><th scope="row">Elderly (65+)</th><td>' + props.elderly + '</td></tr>' +
+              '<tr><th scope="row">Area</th><td>' + areaKm2 + '</td></tr>' +
+              '</table>';
+          layer.bindPopup(popupContent, { maxHeight: 400 });
+      }
+
+      // 2045 handler
+      function pop_paavo_2045(feature, layer) {
+          addPaavoInteractions(layer);
+          var props = feature.properties || {};
+          var areaKm2 = (props.area != null && !isNaN(props.area)) ? (props.area / 1000000).toFixed(2) + ' km²' : '';
+          var elderly2045 = props['2045_65-74'] + props['2045_75-'];
+          var difference = elderly2045 - props['elderly'];
+          var popupContent = '<table>' +
+              '<tr><th scope="row">Municipality</th><td>' + props.mun + '</td></tr>' +
+              '<tr><th scope="row">Year</th><td>2045</td></tr>' +
+              '<tr><th scope="row">Elderly (65+)</th><td>' + elderly2045 + '</td></tr>' +
+              '<tr><th scope="row">Difference in elderly</th><td>' + difference + '</td></tr>' +
+              '<tr><th scope="row">Projected total</th><td>' + props['2045_total'] + '</td></tr>' +
+              '<tr><th scope="row">Area</th><td>' + areaKm2 + '</td></tr>' +
+              '</table>';
+          layer.bindPopup(popupContent, { maxHeight: 400 });
+      }
+
+      // Toggle functionality
+      var currentPaavoLayer = null;
+      var paavo2024Layer = null;
+      var paavo2045Layer = null;
+
+      function togglePaavoLayer(year) {
+          // Remove current layer if exists
+          if (currentPaavoLayer) {
+              map.removeLayer(currentPaavoLayer);
+          }
+          
+          // Add new layer based on selection
+          if (year === '2024' && paavo2024Layer) {
+              map.addLayer(paavo2024Layer);
+              currentPaavoLayer = paavo2024Layer;
+              document.getElementById('btn2024').classList.add('active');
+              document.getElementById('btn2045').classList.remove('active');
+          } else if (year === '2045' && paavo2045Layer) {
+              map.addLayer(paavo2045Layer);
+              currentPaavoLayer = paavo2045Layer;
+              document.getElementById('btn2024').classList.remove('active');
+              document.getElementById('btn2045').classList.add('active');
+          }
+          
+          console.log('Switched to ' + year + ' data');
+      }
+
+      // Load all layers
+      console.log('Starting to load all layers...');
+      
+      // Load GeoJSON layers sequentially
+    loadGeoJSON('./SW_geo.geojson', {
+          style: {
+              color: "#0033cc",
+              weight: 2,
+              opacity: 0.9,
+              fillOpacity: 0.2
+          }
+      }).then(function(layer) {
+          overlayMaps["SW Finland"] = layer;
+          //layer.addTo(map);
+          console.log('SW Finland layer added to map');
+          return loadGeoJSON('./paavo_2024/paavo_SW_2024.geojson', {
+              style: {
+                  color: "#00cc92",
+                  weight: 2,
+                  opacity: 0.9,
+                  fillOpacity: 0.2
+              },
+              onEachFeature: pop_paavo_2024
+          });
+      }).then(function(layer) {
+          paavo2024Layer = layer;
+          console.log('Paavo 2024 layer loaded');
+          return loadGeoJSON('./paavo_2045/paavo_sw_2045.geojson', {
+              style: {
+                  color: "#cc4400",
+                  weight: 2,
+                  opacity: 0.9,
+                  fillOpacity: 0.2
+              },
+              onEachFeature: pop_paavo_2045
+          });
+      }).then(function(layer) {
+          paavo2045Layer = layer;
+          console.log('Paavo 2045 layer loaded');
+          
+          // Set up toggle buttons
+          document.getElementById('btn2024').addEventListener('click', function() {
+              togglePaavoLayer('2024');
+          });
+          document.getElementById('btn2045').addEventListener('click', function() {
+              togglePaavoLayer('2045');
+          });
+          
+          // Load medical services
+          return loadMedicalServices();
+      }).then(function(medicalLayer) {
+          if (medicalLayer && medicalLayer.layer) {
+              overlayMaps[medicalLayer.name] = medicalLayer.layer;
+              medicalLayer.layer.addTo(map);
+              console.log('Medical Services layer added to map');
+              
+              // Set default to 2024
+              togglePaavoLayer('2024');
+              
+              // Try to fit bounds to medical services
+              setTimeout(() => {
+                  try {
+                      const bounds = medicalLayer.layer.getBounds();
+                      if (bounds && bounds.isValid()) {
+                          console.log('Medical services bounds:', bounds);
+                          map.fitBounds(bounds);
+                          console.log('Map fitted to medical services');
+                      }
+                  } catch (error) {
+                      console.log('Could not fit bounds to medical services:', error);
+                  }
+              }, 1000);
+          }
+          
+          // Add layer control after all layers are loaded
+          L.control.layers(baseMaps, overlayMaps).addTo(map);
+          console.log('Layer control added to map');
+          console.log('Available overlay layers:', Object.keys(overlayMaps));
+          
+      }).catch(function(error) {
+          console.error("Error loading layers:", error);
+          // Add layer control even if some layers fail
+          L.control.layers(baseMaps, overlayMaps).addTo(map);
+      });
+
+      // Add attribution
+      map.attributionControl.addAttribution('&copy; <a href="http://teamwebsite.com">Archipelagis</a>');
+    </script>
+    
+</body>
+</html>

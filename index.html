@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archipelagis WM int</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <div class="base-layer-control">
+    <span class="control-title">Base Map:</span>
+    <button id="btnOSM" class="base-toggle-btn active">OpenStreetMap</button>
+    <button id="btnSatellite" class="base-toggle-btn">Satellite</button>
+  </div>
+
+  <div class="layer-control">
+    <div>
+      <strong>Data Year:</strong>
+      <button id="btn2024" class="toggle-btn active">2024</button>
+      <button id="btn2045" class="toggle-btn">2045</button>
+    </div>
+  </div>
+
+  <!-- External JS libraries -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.8.0/proj4.js"></script>
+  <script src="https://unpkg.com/proj4leaflet@1.0.2/src/proj4leaflet.js"></script>
+  <script src="leaflet-side-by-side/leaflet-side-by-side.min.js" ></script>
+
+  <!-- Custom JS -->
+  <script src="map-init.js"></script>
+  <script src="projection.js"></script>
+  <script src="data-loaders.js"></script>
+  <script src="paavo-layers.js"></script>
+  <script src="layer-styles.js"></script>
+  <script src="main.js"></script>
+  
+</body>
+</html>
