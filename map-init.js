@@ -61,9 +61,15 @@ var legend = L.control({ position: "bottomright" });
 
 legend.onAdd = function() {
   var div = L.DomUtil.create("div", "legend");
-  div.innerHTML += "<h4>Legend</h4>"; //the title of the Legend box
-  div.innerHTML += '<i style="background: #00cc92","></i><span>2024</span><br>'; //
-  div.innerHTML += '<i style="background: #cc4400"></i><span>2045</span><br>';
+  div.innerHTML += "<h4>2024</h4>"; //the 2024 layer legend
+  div.innerHTML += '<i style="background: #00cc92","></i><span>2024</span><br>'; 
+  div.innerHTML += "<h4>2045</h4>"; //the 2045 layer legend
+  div.innerHTML += "<h5>Elderly population change</h5>"; 
+  div.innerHTML += '<i style="background: #2C7BB6"></i><span>< 0 %</span><br>';
+  div.innerHTML += '<i style="background: #ABD9E9"></i><span>0-10 %</span><br>';
+  div.innerHTML += '<i style="background: #FFFFBF"></i><span>11-25 %</span><br>';
+  div.innerHTML += '<i style="background: #FDAE61"></i><span>26-50 %</span><br>';
+  div.innerHTML += '<i style="background: #D7191C"></i><span>50 < %</span><br>';
   return div;
 };
 
