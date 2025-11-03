@@ -81,8 +81,8 @@ legend.onAdd = function() {
   for (var i = 0; i < marker_labels.length; i++) {
         div.innerHTML += ("<img src="+ marker_sources[i] +" height='20' width='20'>") + " " + marker_labels[i] +'<br>';
     }
+    
   return div;
-
 };
 
 legend.addTo(map);

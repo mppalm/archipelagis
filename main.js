@@ -42,7 +42,7 @@ loadGeoJSON('./docs/SW_geo.geojson', {
     L.control.sideBySide(paavo2024Layer, paavo2045Layer).addTo(map);
   }*/
 
-  return loadMedicalServices();
+  return loadMedicalServices(); //found in data-loaders.js
 })
 .then(function(medicalLayer) {
   if (medicalLayer && medicalLayer.layer) {

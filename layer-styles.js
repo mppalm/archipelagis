@@ -21,7 +21,7 @@ const layerStyles = {
   }
 };
 
-//marker style for service point data
+//marker styles for service point data
 var medicalIcon = L.icon({
   className: 'medical-marker',
   iconUrl: './house_marker.png', //url of the medical point png
@@ -29,6 +29,33 @@ var medicalIcon = L.icon({
   iconSize:     [40, 40], // size of the icon
   iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
   popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+var hospitalIcon = L.icon({
+  className: 'medical-marker',
+  iconUrl: './house_marker.png', //url 
+
+  iconSize:     [40, 40], 
+  iconAnchor:   [10, 10],
+  popupAnchor:  [-3, -76] 
+});
+
+var publicIcon = L.icon({
+  className: 'medical-marker',
+  iconUrl: './house_marker.png', //url 
+
+  iconSize:     [40, 40], 
+  iconAnchor:   [10, 10], 
+  popupAnchor:  [-3, -76] 
+});
+
+var privateIcon = L.icon({
+  className: 'medical-marker',
+  iconUrl: './house_marker.png', //url 
+
+  iconSize:     [40, 40], 
+  iconAnchor:   [10, 10], 
+  popupAnchor:  [-3, -76] 
 });
 
 //house_marker.png source:

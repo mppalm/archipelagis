@@ -1,5 +1,6 @@
 /* CONTENTS:
 - loading
+- medical service layer
 */
 
 // Load and reproject GeoJSON
@@ -51,25 +52,8 @@ function loadMedicalServices() {
       }
       
       const medicalLayer = L.geoJSON(data, {
-        pointToLayer: function(feature, latlng) {
-          return L.marker(latlng, {
-            icon: medicalIcon, //style in layer-styles.js
-            title: feature.properties.name || 'Medical Service',
-            interactive: true
-          });
-        },
-        onEachFeature: function(feature, layer) {
-          const props = feature.properties || {};
-          let popupContent = (props.kohteen_ni || '') + '</h3><table>';
-          if (props.palvelukoh) {
-            popupContent += '<tr><th scope="row">Service Type</th><td>' + props.palvelukoh + '</td></tr>';
-          }
-          if (props.palvelut) {
-            popupContent += '<tr><th scope="row">Services</th><td>' + props.palvelut + '</td></tr>';
-          }
-          popupContent += '</table></div>';
-          layer.bindPopup(popupContent, { maxHeight: 400, maxWidth: 400 });
-        }
+        pointToLayer: addPointToLayer,
+        onEachFeature: pop_medical,
       });
       
       return { name: "Medical Services", layer: medicalLayer };
