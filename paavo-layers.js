@@ -162,62 +162,62 @@ function style_paavo_2045(feature) {
   var percentage = Math.round((elderly2045-props['elderly'])/props['elderly']*100)
   if (percentage < 0) {
     return {
-      opacity: 1,
+      opacity: 0.9,
       color: 'rgba(0,0,0,1.0)',
       dashArray: '',
       lineCap: 'butt',
       lineJoin: 'miter',
       weight: 1.0, 
       fill: true,
-      fillOpacity: 1,
+      fillOpacity: 0.6,
       fillColor: '#2C7BB6',
       interactive: true, }
   } else if (percentage >= 0 && percentage <=10) {
     return {
-      opacity: 1,
+      opacity: 0.9,
       color: 'rgba(1,1,1,1.0)',
       dashArray: '',
       lineCap: 'butt',
       lineJoin: 'miter',
       weight: 1.0, 
       fill: true,
-      fillOpacity: 1,
+      fillOpacity: 0.6,
       fillColor: '#ABD9E9',
       interactive: true, }  
   } else if (percentage > 10 && percentage <=25) {
     return {
-      opacity: 1,
+      opacity: 0.9,
       color: 'rgba(0,0,0,1.0)',
       dashArray: '',
       lineCap: 'butt',
       lineJoin: 'miter',
       weight: 1.0, 
       fill: true,
-      fillOpacity: 1,
+      fillOpacity: 0.6,
       fillColor: '#FFFFBF',
       interactive: true, }
   } else if (percentage > 25 && percentage <=50) {
     return {
-      opacity: 1,
+      opacity: 0.9,
       color: 'rgba(0,0,0,1.0)',
       dashArray: '',
       lineCap: 'butt',
       lineJoin: 'miter',
       weight: 1.0, 
       fill: true,
-      fillOpacity: 1,
+      fillOpacity: 0.6,
       fillColor: '#FDAE61',
       interactive: true, }
   } else {
     return {
-      opacity: 1,
+      opacity: 0.9,
       color: 'rgba(0,0,0,1.0)',
       dashArray: '',
       lineCap: 'butt',
       lineJoin: 'miter',
       weight: 1.0, 
       fill: true,
-      fillOpacity: 1,
+      fillOpacity: 0.6,
       fillColor: '#D7191C',
       interactive: true, }
   }

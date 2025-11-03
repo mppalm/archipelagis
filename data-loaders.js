@@ -53,12 +53,7 @@ function loadMedicalServices() {
       const medicalLayer = L.geoJSON(data, {
         pointToLayer: function(feature, latlng) {
           return L.marker(latlng, {
-            icon: L.divIcon({
-              className: 'medical-marker',
-              html: '<div style="background-color: red; width: 10px; height: 10px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 5px black;"></div>',
-              iconSize: [10, 10],
-              iconAnchor: [10, 10]
-            }),
+            icon: medicalIcon, //style in layer-styles.js
             title: feature.properties.name || 'Medical Service',
             interactive: true
           });
