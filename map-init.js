@@ -72,10 +72,10 @@ legend.onAdd = function() {
   div.innerHTML += '<i style="background: #00cc92","></i><span>2024</span><br>'; 
   div.innerHTML += "<h4>2045</h4>"; //the 2045 layer legend
   div.innerHTML += "<h5>Elderly population change</h5>"; 
-  div.innerHTML += '<i style="background: #2C7BB6"></i><span>< 0 %</span><br>';
+  div.innerHTML += '<i style="background: #2C7BB6"></i><span>< -17-0 %</span><br>';
   div.innerHTML += '<i style="background: #ABD9E9"></i><span>0-10 %</span><br>';
   div.innerHTML += '<i style="background: #FFFFBF"></i><span>11-25 %</span><br>';
-  div.innerHTML += '<i style="background: #FDAE61"></i><span>26-50 %</span><br>';
+  div.innerHTML += '<i style="background: #FDAE61"></i><span>26-46 %</span><br>';
   div.innerHTML += '<i style="background: #D7191C"></i><span>50 < %</span><br>';
   div.innerHTML += "<h4>Medical Services</h4>"; //Medical Services layer legend
   for (var i = 0; i < marker_labels.length; i++) {
