@@ -77,7 +77,7 @@ function style_paavo_2045(feature) {
   var props = feature.properties || {};
   var elderly2045 = props['2045_65-74'] + props['2045_75-'];
   var percentage = Math.round((elderly2045-props['elderly'])/props['elderly']*100)
-  if (percentage < -17) {
+  if (percentage >= -17) && percentage <=0) {
     return {
       opacity: 0.9,
       color: 'rgba(0,0,0,1.0)',
