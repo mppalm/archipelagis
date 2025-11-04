@@ -76,7 +76,7 @@ legend.onAdd = function() {
   div.innerHTML += '<i style="background: #ABD9E9"></i><span>0-10 %</span><br>';
   div.innerHTML += '<i style="background: #FFFFBF"></i><span>11-25 %</span><br>';
   div.innerHTML += '<i style="background: #FDAE61"></i><span>26-46 %</span><br>';
-  div.innerHTML += '<i style="background: #D7191C"></i><span>Nodata < %</span><br>';
+  div.innerHTML += '<i style="background: #D7191C"></i><span>Nodata</span><br>';
   div.innerHTML += "<h4>Medical Services</h4>"; //Medical Services layer legend
   for (var i = 0; i < marker_labels.length; i++) {
         div.innerHTML += ("<img src="+ marker_sources[i] +" height='20' width='20'>") + " " + marker_labels[i] +'<br>';
