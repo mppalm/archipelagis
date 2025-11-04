@@ -100,7 +100,7 @@ function style_paavo_2045(feature) {
       weight: 1.0, 
       fill: true,
       fillOpacity: 0.6,
-      fillColor: '#ABD9E9',
+      fillColor: '#FFFFBF',
       interactive: true, }  
   } else if (percentage > 10 && percentage <=25) {
     return {
@@ -112,7 +112,7 @@ function style_paavo_2045(feature) {
       weight: 1.0, 
       fill: true,
       fillOpacity: 0.6,
-      fillColor: '#FFFFBF',
+      fillColor: '#FDAE61',
       interactive: true, }
   } else if (percentage > 25 && percentage <=46) {
     return {
@@ -124,7 +124,7 @@ function style_paavo_2045(feature) {
       weight: 1.0, 
       fill: true,
       fillOpacity: 0.6,
-      fillColor: '#FDAE61',
+      fillColor: '#D73027',
       interactive: true, }
   } else {
     return {
@@ -136,7 +136,7 @@ function style_paavo_2045(feature) {
       weight: 1.0, 
       fill: true,
       fillOpacity: 0.6,
-      fillColor: '#D7191C',
+      fillColor: '#e3e1e1',
       interactive: true, }
   }
 }
