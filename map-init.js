@@ -91,3 +91,56 @@ legend.onAdd = function() {
 };
 
 legend.addTo(map);
+
+// title box and info box
+//title and abstract box code adapted from: https://digicampus.fi/mod/folder/view.php?id=363678 excercise material
+// Permanent title box (always visible)
+if (!window._titleAdded) {
+    window._titleAdded = true;
+    var title = new L.Control({'position':'bottomleft'});
+    title.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'title-box');
+        this.update();
+        return this._div;
+    };
+    title.update = function () {
+        this._div.innerHTML = '<h2>Elderly Population Projections</h2><p>Southwest Finland 2024-2045</p>';
+    };
+    title.addTo(map);
+}
+
+// Expandable info box (hover to see details)
+var abstract = new L.Control({'position':'bottomleft'});
+abstract.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'leaflet-control abstract');
+    this._div.id = 'abstract';
+    this._div.setAttribute("onmouseenter", "abstract.show()");
+    this._div.setAttribute("onmouseleave", "abstract.hide()");
+    this.hide();
+    return this._div;
+};
+abstract.hide = function () {
+    this._div.classList.remove("abstractUncollapsed");
+    this._div.classList.add("abstract");
+    this._div.innerHTML = 'ℹ️';
+};
+abstract.show = function () {
+    this._div.classList.remove("abstract");
+    this._div.classList.add("abstractUncollapsed");
+    this._div.innerHTML = `
+        <h4>About This Project</h4>
+        <p>This map visualizes elderly population projections for municipalities in Southwest Finland.</p>
+        <p>Our main focus is on Future Demographic Change and the Spatial Adequacy of Healthcare Infrastructure in SW Finland </p>
+        
+        <p><strong>Main focus:</strong></p>
+        <p>This web map visualizes how demographic change will affect access to health care services across municipalities. 
+By comparing the elderly population in 2024 with projected changes in 2045, users can identify regions where health care demand may exceed capacity and where service gaps or pressure areas are likely to emerge. The map supports evidence-based planning for resilient health systems by helping to locate underserved areas, visualize demographic pressure, and anticipate future mismatches between an aging population and health care capacity. </p>
+        
+        <p><strong>Data:</strong> 
+  <a href="https://www.avoindata.fi/data/fi/dataset/varsinais-suomen-ja-satakunnan-palvelupisteet/resource/62943ec3-3e48-44e2-b521-8121a8f579b7" target="_blank">Healthcare services</a> • 
+  <a href="https://stat.fi/tup/paavo/paavon_aineistokuvaukset_en.html" target="_blank">Paavo data</a>
+</p>
+<p class="copyright">&copy; Archipelagis</p>
+    `;
+};
+abstract.addTo(map);
