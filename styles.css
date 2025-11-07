@@ -109,3 +109,87 @@
   background-size: 18px;
   background-color: rgba(255, 255, 255, 1);
 }
+/*  Title Box Styles */
+.title-box {
+    background: white;
+    padding: 12px 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    border-left: 4px solid #2C7BB6;
+    max-width: 280px;
+    margin-bottom: 10px;
+}
+
+.title-box h2 {
+    margin: 0 0 8px 0;
+    font-size: 1.2rem;
+    color: #000000;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.title-box p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #404040;
+    line-height: 1.4;
+}
+
+/* Abstract Control Styles */
+.abstract {
+    background: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    font-weight: bold;
+    font-size: 1rem;
+    margin-top: 5px;
+}
+
+.abstractUncollapsed {
+    background: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    max-width: 320px;
+    cursor: pointer;
+    margin-top: 5px;
+    border-left: 4px solid #FDAE61;
+}
+
+.abstractUncollapsed h4 {
+    margin: 0 0 12px 0;
+    font-size: 1.1rem;
+    color: #000000;
+    font-weight: 600;
+}
+
+.abstractUncollapsed p {
+    margin: 0 0 10px 0;
+    font-size: 0.85rem;
+    color: #404040;
+    line-height: 1.4;
+}
+
+.abstractUncollapsed ul {
+    margin: 0 0 10px 0;
+    padding-left: 15px;
+    font-size: 0.8rem;
+    color: #404040;
+    line-height: 1.4;
+}
+
+.abstractUncollapsed li {
+    margin-bottom: 5px;
+}
+
+.abstractUncollapsed em {
+    font-size: 0.75rem;
+    color: #666;
+}
+
