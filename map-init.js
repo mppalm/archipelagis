@@ -69,7 +69,12 @@ legend.onAdd = function() {
   var div = L.DomUtil.create("div", "legend");
   
   div.innerHTML += "<h4>2024</h4>"; //the 2024 layer legend
-  div.innerHTML += '<i style="background: #00cc92","></i><span>2024</span><br>'; 
+  div.innerHTML += "<h5>Elderly population proportion</h5>"; 
+  div.innerHTML += '<i style="background: #FFF5E0"></i><span>0 – 15 %</span><br>';
+  div.innerHTML += '<i style="background: #FDDFA0"></i><span>16 – 25 %</span><br>';
+  div.innerHTML += '<i style="background: #FDBB60"></i><span>26 – 35 %</span><br>';
+  div.innerHTML += '<i style="background: #F46A25"></i><span>36 – 45 %</span><br>';
+
   div.innerHTML += "<h4>2045</h4>"; //the 2045 layer legend
   div.innerHTML += "<h5>Elderly population change</h5>"; 
   div.innerHTML += '<i style="background: #2C7BB6"></i><span>-17 – -1 %</span><br>';
@@ -77,6 +82,7 @@ legend.onAdd = function() {
   div.innerHTML += '<i style="background: #FDAE61"></i><span>11 – 25 %</span><br>';
   div.innerHTML += '<i style="background: #D73027"></i><span>26 – 46 %</span><br>';
   div.innerHTML += '<i style="background: #e3e1e1"></i><span>Nodata</span><br>';
+
   div.innerHTML += "<h4>Medical Services</h4>"; //Medical Services layer legend
   for (var i = 0; i < marker_labels.length; i++) {
         div.innerHTML += ("<img src="+ marker_sources[i] +" height='20' width='20'>") + " " + marker_labels[i] +'<br>';

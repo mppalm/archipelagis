@@ -33,6 +33,27 @@ function loadGeoJSON(url, options) {
     });
 }
 
+// Load and calculate total of elderly
+// did not want to modify the existing loadGeoJSON function
+function calculateTotalElderly(url) {
+  return fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      const features = data.features || [];
+      const total = features.reduce((sum, f) => {
+        const val = Number(f.properties.elderly) || 0;
+        return sum + val;
+      }, 0);
+      console.log("Total elderly in dataset:", total);
+      return total;
+    })
+    .catch(err => {
+      console.error("Failed to calculate elderly total:", err);
+      return 0;
+    });
+}
+
+
 // Load Medical Services
 function loadMedicalServices() {
   console.log('Attempting to load medical services data...');

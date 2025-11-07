@@ -4,6 +4,13 @@
 - final attribution
 */
 
+// calculate the total elderly
+calculateTotalElderly('./docs/paavo_2024/paavo_SW_2024.geojson')
+  .then(totalElderly => {
+    window.totalElderly = totalElderly;
+    console.log("Global totalElderly set to:", window.totalElderly);
+  });
+
 // === Sequential Layer Loading ===
 console.log('Starting to load all layers...');
 
@@ -14,7 +21,7 @@ loadGeoJSON('./docs/SW_geo.geojson', {
   overlayMaps["SW Finland"] = layer;
 
   return loadGeoJSON('./docs/paavo_2024/paavo_SW_2024.geojson', {
-    style: layerStyles.paavo2024,
+    style: style_paavo_2024,
     onEachFeature: pop_paavo_2024
   });
 })

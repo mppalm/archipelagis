@@ -59,8 +59,6 @@ function pop_paavo_2045(feature, layer) {
     projected_total = 'N/A'; //not available
   }
   
-  //var difference = elderly2045 - props['elderly'];
-  //var percentage = Math.round((elderly2045 - props['elderly'])/elderly2045*100) + ' %';
   var popupContent = '<table>' +
       '<tr><th scope="row">Municipality</th><td>' + props.mun + '</td></tr>' +
       '<tr><th scope="row">Year</th><td>2045</td></tr>' +
@@ -70,6 +68,76 @@ function pop_paavo_2045(feature, layer) {
       '<tr><th scope="row">Area</th><td>' + areaKm2 + '</td></tr>' +
       '</table>';
   layer.bindPopup(popupContent, { maxHeight: 400 });
+}
+
+function style_paavo_2024(feature) {
+  var props = feature.properties || {};
+  var elderly = props.elderly;
+  var percentage = elderly/totalElderly * 100
+
+  console.log("percentage is: " + percentage);
+
+  if (percentage <= 15) {
+    return {
+      opacity: 0.9,
+      color: 'rgba(0,0,0,1.0)',
+      dashArray: '',
+      lineCap: 'butt',
+      lineJoin: 'miter',
+      weight: 1.0, 
+      fill: true,
+      fillOpacity: 0.6,
+      fillColor: '#FFF5E0',
+      interactive: true, }
+  } else if (percentage > 15 && percentage <=25) {
+    return {
+      opacity: 0.9,
+      color: 'rgba(1,1,1,1.0)',
+      dashArray: '',
+      lineCap: 'butt',
+      lineJoin: 'miter',
+      weight: 1.0, 
+      fill: true,
+      fillOpacity: 0.6,
+      fillColor: '#FDDFA0',
+      interactive: true, }  
+  } else if (percentage > 25 && percentage <=35) {
+    return {
+      opacity: 0.9,
+      color: 'rgba(0,0,0,1.0)',
+      dashArray: '',
+      lineCap: 'butt',
+      lineJoin: 'miter',
+      weight: 1.0, 
+      fill: true,
+      fillOpacity: 0.6,
+      fillColor: '#FDBB60',
+      interactive: true, }
+  } else if (percentage > 35 && percentage <=45) {
+    return {
+      opacity: 0.9,
+      color: 'rgba(0,0,0,1.0)',
+      dashArray: '',
+      lineCap: 'butt',
+      lineJoin: 'miter',
+      weight: 1.0, 
+      fill: true,
+      fillOpacity: 0.6,
+      fillColor: '#F46A25',
+      interactive: true, }
+  } else {
+    return {
+      opacity: 0.9,
+      color: 'rgba(0,0,0,1.0)',
+      dashArray: '',
+      lineCap: 'butt',
+      lineJoin: 'miter',
+      weight: 1.0, 
+      fill: true,
+      fillOpacity: 0.6,
+      fillColor: '#B42000',
+      interactive: true, }
+  }
 }
 
 
