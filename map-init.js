@@ -69,7 +69,7 @@ legend.onAdd = function() {
   var div = L.DomUtil.create("div", "legend");
   
   div.innerHTML += "<h4>2024</h4>"; //the 2024 layer legend
-  div.innerHTML += "<h5>Elderly population proportion</h5>"; 
+  div.innerHTML += "<h5>Elderly population distribution</h5>"; 
   div.innerHTML += '<i style="background: #FFF5E0"></i><span>0 – 3 %</span><br>';
   div.innerHTML += '<i style="background: #FDBB60"></i><span>4 – 15 %</span><br>';
   div.innerHTML += '<i style="background: #F46A25"></i><span>16 – 36 %</span><br>';
