@@ -13,28 +13,28 @@ This web map visualizes how demographic change will affect access to health care
 The map supports planners and policymakers in integrating demographic forecasts into long-term urban and health infrastructure strategies.
 <br/>
 <br/>
-Two main layers enable comparison over time:
-•	2024 Layer: Shows the current share of elderly people in each municipality - helping urban planners understand today’s spatial distribution of aging populations and existing health care access.
-•	2045 Layer: Displays the percentage increase or decrease of elderly residents, highlighting future hotspots of demographic pressure and areas where demand for care services is expected to grow most.
+Two main layers enable comparison over time: <br/>
+- 2024 Layer: Shows the current share of elderly people in each municipality - helping urban planners understand today’s spatial distribution of aging populations and existing health care access. <br/>
+- 2045 Layer: Displays the percentage increase or decrease of elderly residents, highlighting future hotspots of demographic pressure and areas where demand for care services is expected to grow most.
 <br/>
 <br/>
-Another dataset shows the location of health care services, divided into:
-•	Hospitals
-•	Municipal Health Centers
-•	Private Medical Services
+Another dataset shows the location of health care services, divided into: <br/>
+- Hospitals <br/>
+- Municipal Health Centers <br/>
+- Private Medical Services <br/>
 <br/>
 <br/>
-Together, these layers allow users to:
-•	Locate underserved areas or regions where population aging will likely outpace current health care capacity,
-•	Support planning for new facilities or service expansions,
-•	Prioritize mobility and infrastructure improvements for older adults, and
-•	Monitor spatial equity in access to health care across municipalities.
+Together, these layers allow users to: <br/>
+- Locate underserved areas or regions where population aging will likely outpace current health care capacity, <br/>
+- Support planning for new facilities or service expansions, <br/>
+- Prioritize mobility and infrastructure improvements for older adults, and <br/>
+- Monitor spatial equity in access to health care across municipalities. 
 <br/>
 <br/>
 <br/>
 <br/>
 
-<b> "paavo_2024" </b>
+<b> "paavo_2024" </b> <br/>
 Folder includes the "paavo_sw_f_2024.shp" file. <br/>
 Attribute description: <br/>
 - area = total area of the municipality <br/>
@@ -44,7 +44,7 @@ Attribute description: <br/>
 - mun = municipality name <br/>
 <br/>
 <br/>
-<b> "paavo_2045" </b>
+<b> "paavo_2045" </b> <br/>
 Folder includes the "paavo_sw_f_2045.shp" file. <br/>
 - area = total area of the municipality <br/>
 - mun_code = municipality code <br/>
