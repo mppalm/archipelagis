@@ -78,6 +78,7 @@ loadGeoJSON('./docs/SW_geo.geojson', {
 
 
 // Add attribution
-map.attributionControl.addAttribution('&copy; <a href="http://teamwebsite.com">Archipelagis</a>');
+map.attributionControl.addAttribution('&copy; <a href="https://github.com/mppalm/archipelagis">Archipelagis</a>');
 
+map.attributionControl.addAttribution('CRS: <a href="https://github.com/proj4js/proj4js" target="_blank">proj4js</a>');
 

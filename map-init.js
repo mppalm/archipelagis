@@ -139,8 +139,10 @@ By comparing the elderly population in 2024 with projected changes in 2045, user
         <p><strong>Data:</strong> 
   <a href="https://www.avoindata.fi/data/fi/dataset/varsinais-suomen-ja-satakunnan-palvelupisteet/resource/62943ec3-3e48-44e2-b521-8121a8f579b7" target="_blank">Healthcare services</a> • 
   <a href="https://stat.fi/tup/paavo/paavon_aineistokuvaukset_en.html" target="_blank">Paavo data</a>
+  <a href="https://pxdata.stat.fi/PxWeb/pxweb/en/StatFin/StatFin__vaenn/statfin_vaenn_pxt_14wx.px/" target="blank">Forecast data</a>
 </p>
-<p class="copyright">&copy; Archipelagis</p>
+<p class="copyright">&copy;<a href="https://github.com/mppalm/archipelagis">Archipelagis project 10-11/2025</a>
+</p>
     `;
 };
 abstract.addTo(map);
